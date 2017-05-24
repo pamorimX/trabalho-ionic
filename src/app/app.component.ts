@@ -7,6 +7,7 @@ import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
 import { Pagina3Page } from '../pages/pagina3/pagina3';
 import { MapaPage } from '../pages/mapa/mapa';
+import { GeoPage } from '../pages/geo/geo';
 
 @Component({
   templateUrl: 'app.html'
@@ -26,7 +27,8 @@ export class MyApp {
       { title: 'Home', component: HomePage },
       { title: 'List', component: ListPage },
       { title: 'Página 3', component: Pagina3Page },
-      { title: 'Mapa Google', component: MapaPage }
+      { title: 'Mapa Google', component: MapaPage },
+      { title: 'Geolocalização', component: GeoPage }
     ];
 
   }
