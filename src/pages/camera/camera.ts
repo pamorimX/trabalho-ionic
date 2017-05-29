@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import {NavController, AlertController, ToastController} from 'ionic-angular';
 import {Camera, CameraOptions} from '@ionic-native/camera';
-//import { FilePath } from '@ionic-native/file-path';
-//import { File } from '@ionic-native/file';
-//import { Storage } from '@ionic/storage';
+import { FilePath } from '@ionic-native/file-path';
+import { File } from '@ionic-native/file';
+import { Storage } from '@ionic/storage';
 
 declare var cordova: any;
 
@@ -23,8 +23,8 @@ export class CameraPage {
     public toaster: ToastController,
     private camera : Camera,
     private alerta : AlertController,
-    //private file: File,
-    //private filePath: FilePath,
+    private file: File,
+    private filePath: FilePath,
     //private storage: Storage
   ) {
 
@@ -59,50 +59,44 @@ export class CameraPage {
   tirarFoto() {
     const options : CameraOptions = {
       quality: 100,
-      destinationType: this.camera.DestinationType.DATA_URL,
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE
-    }
+    };
 
     this.camera.getPicture(options).then((imageData) => {
-      this.base64Image = "data:image/jpeg;base64," + imageData;
-      this.fotos.push(this.base64Image);
+      this.fotos.push(imageData);
       this.fotos.reverse();
       console.log(this.fotos)
 
-      var currentName = imageData.substr(imageData.lastIndexOf('/') + 1);
-      var correctPath = imageData.substr(0, imageData.lastIndexOf('/') + 1);
+      let caminhoOrigem = imageData.substr(0, imageData.lastIndexOf('/') + 1);
+      let nomeOrigem = imageData.substr(imageData.lastIndexOf('/') + 1);
 
-      console.log("Nome atual " +currentName+ "\n Path "+correctPath);
+      let novoArquivo = new Date().getTime()+".jpg";
 
-      var novoArquivo = this.createFileName();
+      console.log("Caminho Origem: "+ caminhoOrigem);
+      console.log("Nome Origem: " + nomeOrigem);
+      console.log("Novo Nome: " + novoArquivo);
 
-      console.log("Novo arquivo: " + novoArquivo)
-
-      //this.copyFileToLocalDir(correctPath, currentName, novoArquivo);
+      this.copyFileToLocalDir(caminhoOrigem, nomeOrigem, novoArquivo);
 
     }, (err) => {
       console.log(err);
     });
   }
-  // Cria um novo nome para a imagem
-  private createFileName() {
-    return new Date().getTime()+".jpg";
-  }
 
-  // Copy the image to a local folder
-/*  private copyFileToLocalDir(namePath, currentName, newFileName) {
-    this.file.copyFile(namePath, currentName, cordova.file.dataDirectory, newFileName).then(success => {
-      this.lastImage = newFileName;
-      console.log('namepath: ' + namePath + '\n currentName: ' + currentName + '\n newfilename: ' + newFileName)
+  // Copia a imagem para um diretorio local
+ private copyFileToLocalDir(caminhoOrigem, nomeOrigem, novoNome) {
+   this.file.copyFile(caminhoOrigem, nomeOrigem, cordova.file.dataDirectory, novoNome).then(success => {
+     this.lastImage = novoNome;
+     console.log("------------");
+     console.log('Caminho Antigo: ' + caminhoOrigem + '\n Nome Antigo: ' + nomeOrigem + '\n Novo Caminho: '+cordova.file.dataDirectory+'\n  Novo Nome: ' + novoNome)
 
-      //this.storage.set('imagemAtual', newFileName);
+      //this.storage.set('imagemAtual', novoNome);
 
     }, error => {
       this.presentToast('Erro ao tentar armazenar imagem!');
     });
   }
-
 
 
 
@@ -114,8 +108,10 @@ export class CameraPage {
     });
     toast.present();
   }
+  /*
 
-// Always get the accurate path to your apps folder
+
+   // Always get the accurate path to your apps folder
   public pathForImage(img) {
     if (img === null) {
       return '';

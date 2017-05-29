@@ -3,7 +3,6 @@ import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
-import { ListPage } from '../pages/list/list';
 import { CameraPage } from '../pages/camera/camera';
 import { MapaPage } from '../pages/mapa/mapa';
 import { StatusBar } from '@ionic-native/status-bar';
@@ -13,15 +12,14 @@ import { Geolocation } from '@ionic-native/geolocation';
 import { NativeGeocoder } from '@ionic-native/native-geocoder';
 import {LocationAccuracy} from "@ionic-native/location-accuracy";
 import {Camera} from '@ionic-native/camera';
-//import { FilePath } from '@ionic-native/file-path';
-//import { File } from '@ionic-native/file';
-//import { Transfer } from '@ionic-native/transfer';
+import { FilePath } from '@ionic-native/file-path';
+import { File } from '@ionic-native/file';
+import { Transfer } from '@ionic-native/transfer';
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
-    ListPage,
     CameraPage,
     MapaPage
   ],
@@ -33,7 +31,6 @@ import {Camera} from '@ionic-native/camera';
   entryComponents: [
     MyApp,
     HomePage,
-    ListPage,
     CameraPage,
     MapaPage
   ],
@@ -45,9 +42,9 @@ import {Camera} from '@ionic-native/camera';
     NativeGeocoder,
     LocationAccuracy,
     Camera,
-    //File,
-    //FilePath,
-    //Transfer,
+    File,
+    FilePath,
+    Transfer,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

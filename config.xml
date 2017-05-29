@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="io.ionic.starter" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>Amorim App</name>
+<widget id="com.hibrido.pos" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>Hibrido App</name>
     <description>Trabalho de desenvolvimento híbrido.</description>
-    <author email="pamorim.dev@gmail.com" href="http://google.com/">Pedro Amorim</author>
+    <author email="pamorim.dev@gmail.com" href="http://google.com/">Pedro Amorim - Deroci JR</author>
     <content src="index.html" />
     <access origin="*" />
     <allow-navigation href="http://ionic.local/*" />
