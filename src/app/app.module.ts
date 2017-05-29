@@ -13,6 +13,9 @@ import { Geolocation } from '@ionic-native/geolocation';
 import { NativeGeocoder } from '@ionic-native/native-geocoder';
 import {LocationAccuracy} from "@ionic-native/location-accuracy";
 import {Camera} from '@ionic-native/camera';
+//import { FilePath } from '@ionic-native/file-path';
+//import { File } from '@ionic-native/file';
+//import { Transfer } from '@ionic-native/transfer';
 
 @NgModule({
   declarations: [
@@ -42,6 +45,9 @@ import {Camera} from '@ionic-native/camera';
     NativeGeocoder,
     LocationAccuracy,
     Camera,
+    //File,
+    //FilePath,
+    //Transfer,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })
