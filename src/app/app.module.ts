@@ -5,6 +5,9 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { CameraPage } from '../pages/camera/camera';
 import { MapaPage } from '../pages/mapa/mapa';
+import { StoragePage } from '../pages/storage/storage';
+
+
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { GoogleMaps } from '@ionic-native/google-maps'
@@ -15,12 +18,14 @@ import {Camera} from '@ionic-native/camera';
 import { FilePath } from '@ionic-native/file-path';
 import { File } from '@ionic-native/file';
 import { Transfer } from '@ionic-native/transfer';
+import { NativeStorage } from '@ionic-native/native-storage';
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
     CameraPage,
+    StoragePage,
     MapaPage
   ],
   imports: [
@@ -32,6 +37,7 @@ import { Transfer } from '@ionic-native/transfer';
     MyApp,
     HomePage,
     CameraPage,
+    StoragePage,
     MapaPage
   ],
   providers: [
@@ -45,6 +51,7 @@ import { Transfer } from '@ionic-native/transfer';
     File,
     FilePath,
     Transfer,
+    NativeStorage,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

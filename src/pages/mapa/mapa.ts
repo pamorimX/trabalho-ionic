@@ -27,9 +27,7 @@ export class MapaPage {
     public geocoder: NativeGeocoder,
     public toaster: ToastController,
     private locationAccuracy: LocationAccuracy,
-  ) {
-
-  }
+  ) { /* corpo do construtor */  }
 
   ngAfterViewInit() {
     this.loadMap();

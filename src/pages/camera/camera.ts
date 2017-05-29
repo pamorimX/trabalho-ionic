@@ -3,7 +3,6 @@ import {NavController, AlertController, ToastController} from 'ionic-angular';
 import {Camera, CameraOptions} from '@ionic-native/camera';
 import { FilePath } from '@ionic-native/file-path';
 import { File } from '@ionic-native/file';
-import { Storage } from '@ionic/storage';
 
 declare var cordova: any;
 
@@ -25,7 +24,7 @@ export class CameraPage {
     private alerta : AlertController,
     private file: File,
     private filePath: FilePath,
-    //private storage: Storage
+
   ) {
 
   }
@@ -66,7 +65,7 @@ export class CameraPage {
     this.camera.getPicture(options).then((imageData) => {
       this.fotos.push(imageData);
       this.fotos.reverse();
-      console.log(this.fotos)
+      console.log(this.fotos);
 
       let caminhoOrigem = imageData.substr(0, imageData.lastIndexOf('/') + 1);
       let nomeOrigem = imageData.substr(imageData.lastIndexOf('/') + 1);
