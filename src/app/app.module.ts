@@ -3,10 +3,10 @@ import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
+import { HttpPage } from '../pages/http/http';
+import { HttpModule } from '@angular/http';
 import { CameraPage } from '../pages/camera/camera';
 import { MapaPage } from '../pages/mapa/mapa';
-import { StoragePage } from '../pages/storage/storage';
-
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -24,20 +24,21 @@ import { NativeStorage } from '@ionic-native/native-storage';
   declarations: [
     MyApp,
     HomePage,
+    HttpPage,
     CameraPage,
-    StoragePage,
     MapaPage
   ],
   imports: [
     BrowserModule,
+    HttpModule,
     IonicModule.forRoot(MyApp),
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
     HomePage,
+    HttpPage,
     CameraPage,
-    StoragePage,
     MapaPage
   ],
   providers: [

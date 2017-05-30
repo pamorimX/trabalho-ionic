@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>HTTP</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-list>
+    <ion-card ion-item *ngFor="let pessoa of pessoas">
+      <ion-item>
+        <ion-avatar item-left>
+          <img src="{{pessoa.picture.thumbnail}}">
+        </ion-avatar>
+        <h1>{{pessoa.name.first}} {{pessoa.name.last}}</h1>
+        <p>{{pessoa.phone}} {{pessoa.nat}}</p>
+      </ion-item>
+    </ion-card>
+  </ion-list>
+</ion-content>
+
+
+

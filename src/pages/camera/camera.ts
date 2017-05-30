@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {NavController, AlertController, ToastController} from 'ionic-angular';
 import {Camera, CameraOptions} from '@ionic-native/camera';
-import { FilePath } from '@ionic-native/file-path';
-import { File } from '@ionic-native/file';
+import {FilePath} from '@ionic-native/file-path';
+import {File} from '@ionic-native/file';
+import {NativeStorage} from '@ionic-native/native-storage';
 
 declare var cordova: any;
 
@@ -13,25 +14,24 @@ declare var cordova: any;
 
 export class CameraPage {
 
-  fotos : any;
-  public base64Image : string;
-  lastImage: string = null;
+  fotos: any;
 
-  constructor(
-    public navCtrl : NavController,
-    public toaster: ToastController,
-    private camera : Camera,
-    private alerta : AlertController,
-    private file: File,
-    private filePath: FilePath,
-
-  ) {
-
+  constructor(public navCtrl: NavController,
+              public toaster: ToastController,
+              private camera: Camera,
+              private alerta: AlertController,
+              private file: File,
+              private filePath: FilePath,
+              private nativeStorage: NativeStorage) {
+    /* corpo do construtor */
   }
 
   ngAfterViewInit() {
-    this.fotos = [];
+    console.log("---");
+    this.recuperaFotos();
+
   }
+
 
   deletarFoto(index) {
 
@@ -46,8 +46,10 @@ export class CameraPage {
         }, {
           text: 'Sim',
           handler: () => {
+            console.log("Imagem a remover: " + this.fotos[index]);
+            this.removeArquivoDoDiretorioLocal(cordova.file.dataDirectory, this.fotos[index]);
             this.fotos.splice(index, 1);
-            //return true;
+            this.gravaFotos(this.fotos);
           }
         }
       ]
@@ -56,47 +58,53 @@ export class CameraPage {
   }
 
   tirarFoto() {
-    const options : CameraOptions = {
+    const options: CameraOptions = {
       quality: 100,
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE
     };
 
     this.camera.getPicture(options).then((imageData) => {
-      this.fotos.push(imageData);
-      this.fotos.reverse();
-      console.log(this.fotos);
 
       let caminhoOrigem = imageData.substr(0, imageData.lastIndexOf('/') + 1);
       let nomeOrigem = imageData.substr(imageData.lastIndexOf('/') + 1);
 
-      let novoArquivo = new Date().getTime()+".jpg";
+      let novoArquivo = new Date().getTime() + ".jpg";
 
-      console.log("Caminho Origem: "+ caminhoOrigem);
-      console.log("Nome Origem: " + nomeOrigem);
-      console.log("Novo Nome: " + novoArquivo);
+      console.log("Copiando imagem para diretorio local...");
 
-      this.copyFileToLocalDir(caminhoOrigem, nomeOrigem, novoArquivo);
+      this.copiaArquivoParaDiretorioLocal(caminhoOrigem, nomeOrigem, novoArquivo);
 
     }, (err) => {
       console.log(err);
     });
   }
 
-  // Copia a imagem para um diretorio local
- private copyFileToLocalDir(caminhoOrigem, nomeOrigem, novoNome) {
-   this.file.copyFile(caminhoOrigem, nomeOrigem, cordova.file.dataDirectory, novoNome).then(success => {
-     this.lastImage = novoNome;
-     console.log("------------");
-     console.log('Caminho Antigo: ' + caminhoOrigem + '\n Nome Antigo: ' + nomeOrigem + '\n Novo Caminho: '+cordova.file.dataDirectory+'\n  Novo Nome: ' + novoNome)
+  private copiaArquivoParaDiretorioLocal(caminhoOrigem, nomeOrigem, novoNome) {
+    this.file.copyFile(caminhoOrigem, nomeOrigem, cordova.file.dataDirectory, novoNome).then((success) => {
 
-      //this.storage.set('imagemAtual', novoNome);
+      this.fotos.push(novoNome);
+      this.gravaFotos(this.fotos);
 
-    }, error => {
+      console.log("Sucesso: " + success);
+
+    }, (error) => {
       this.presentToast('Erro ao tentar armazenar imagem!');
+      console.log("Erro: " + error);
     });
   }
 
+  private removeArquivoDoDiretorioLocal(caminho, nome) {
+    this.file.removeFile(caminho, nome).then((success) => {
+
+        console.log(success);
+
+      }, (error) => {
+        this.presentToast('Erro ao tentar remover imagem!');
+        console.log(error);
+      }
+    );
+  }
 
 
   private presentToast(text) {
@@ -107,17 +115,38 @@ export class CameraPage {
     });
     toast.present();
   }
-  /*
 
 
-   // Always get the accurate path to your apps folder
-  public pathForImage(img) {
+  private gravaFotos(fotos: any) {
+
+    this.nativeStorage.setItem('fotosStorage', fotos).then(() => {
+        console.log('Item armazenado!')
+      },
+      (error) => {
+        console.error('Erro ao amazenar item', error)
+      }
+    );
+  }
+
+  private recuperaFotos() {
+
+    this.nativeStorage.getItem('fotosStorage').then((data) => {
+        console.log("Dados recuperados: " + data);
+        this.fotos = data;
+      },
+      (error) => {
+        console.error(error)
+      }
+    );
+  }
+
+
+  public caminhoParaImagem(img) {
     if (img === null) {
       return '';
     } else {
       return cordova.file.dataDirectory + img;
     }
-  }*/
-
+  }
 
 }

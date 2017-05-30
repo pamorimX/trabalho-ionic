@@ -3,9 +3,9 @@ import { Nav, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { HomePage } from '../pages/home/home';
+import { HttpPage } from '../pages/http/http';
 import { CameraPage } from '../pages/camera/camera';
 import { MapaPage } from '../pages/mapa/mapa';
-import { StoragePage } from '../pages/storage/storage';
 
 @Component({
   templateUrl: 'app.html'
@@ -27,8 +27,8 @@ export class MyApp {
     // used for an example of ngFor and navigation
     this.pages = [
       { title: 'Home', component: HomePage },
+      { title: 'HTTP', component: HttpPage },
       { title: 'Camera', component: CameraPage },
-      { title: 'Storage', component: StoragePage },
       { title: 'Mapa Google', component: MapaPage }
     ];
 
