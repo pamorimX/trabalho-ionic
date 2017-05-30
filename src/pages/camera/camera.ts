@@ -14,7 +14,7 @@ declare var cordova: any;
 
 export class CameraPage {
 
-  fotos: any;
+  fotos: any = [];
 
   constructor(public navCtrl: NavController,
               public toaster: ToastController,
@@ -28,6 +28,7 @@ export class CameraPage {
 
   ngAfterViewInit() {
     console.log("---");
+
     this.recuperaFotos();
 
   }
